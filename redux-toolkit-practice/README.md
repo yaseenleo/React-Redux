@@ -188,3 +188,44 @@ export const store = configureStore({
 #### Redux DevTools
 
 - extension
+
+#### Access store value
+
+- The useSelector hook is used to extract the state of a component from the redux store using the selector function. The useDispatch hook is used to update the state of the component and return a new state.
+
+- create components/Navbar.js
+
+```js
+import { CartIcon } from "../icons";
+import { useSelector } from "react-redux";
+
+const Navbar = () => {
+  const { amount } = useSelector((state) => state.cart);
+
+  return (
+    <nav>
+      <div className="nav-center">
+        <h3>redux toolkit</h3>
+        <div className="nav-container">
+          <CartIcon />
+          <div className="amount-container">
+            <p className="total-amount">{amount}</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+export default Navbar;
+```
+
+#### Hero Icons
+
+- [Hero Icons](https://heroicons.com/)
+
+```css
+nav svg {
+  width: 40px;
+  color: var(--clr-white);
+}
+```
