@@ -330,3 +330,59 @@ const CartItem = ({ id, img, title, price, amount }) => {
 
 export default CartItem;
 ```
+
+#### First Reducer
+
+- cartSlice.js
+- Immer library
+
+```js
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    clearCart: (state) => {
+      state.cartItems = [];
+    },
+  },
+});
+
+export const { clearCart } = cartSlice.actions;
+```
+
+- When we create a reducer by using key value pair like i am using clearCart as a key and the function call as value. The Immer Library takes care of creating an action and payload return as mentioned below
+
+- create action
+
+```js
+const ACTION_TYPE = "ACTION_TYPE";
+
+const actionCreator = (payload) => {
+  return { type: ACTION_TYPE, payload: payload };
+};
+```
+
+- CartContainer.js
+
+```js
+import React from "react";
+import CartItem from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
+
+const CartContainer = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <button
+      className="btn clear-btn"
+      onClick={() => {
+        dispatch(clearCart());
+      }}
+    >
+      clear cart
+    </button>
+  );
+};
+
+export default CartContainer;
+```
