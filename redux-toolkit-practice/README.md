@@ -284,7 +284,7 @@ const CartContainer = () => {
         <hr />
         <div className="cart-total">
           <h4>
-            total <span>${total}</span>
+            total <span>${total.toFixed(2)}</span>
           </h4>
         </div>
         <button className="btn clear-btn">clear cart</button>
@@ -421,10 +421,21 @@ const cartSlice = createSlice({
       const cartItem = state.cartItems.find((item) => item.id === payload.id);
       cartItem.amount = cartItem.amount - 1;
     },
+    calculateTotals: (state) => {
+      let amount = 0;
+      let total = 0;
+      state.cartItems.forEach((item) => {
+        amount += item.amount;
+        total += item.amount * item.price;
+      });
+      state.amount = amount;
+      state.total = total;
+    },
   },
 });
 
-export const { clearCart, removeItem, increase, decrease } = cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease, calculateTotals } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
 ```
@@ -487,4 +498,31 @@ const CartItem = ({ id, img, title, price, amount }) => {
 };
 
 export default CartItem;
+```
+
+- App.js
+
+```js
+import { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import CartContainer from "./components/CartContainer";
+import { useSelector, useDispatch } from "react-redux";
+import { calculateTotals } from "./features/cart/cartSlice";
+
+function App() {
+  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
+
+  return (
+    <main>
+      <Navbar />
+      <CartContainer />
+    </main>
+  );
+}
+
+export default App;
 ```
