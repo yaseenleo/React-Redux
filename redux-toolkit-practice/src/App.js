@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
 import CartContainer from "./components/CartContainer";
-import { useSelector, useDispatch } from "react-redux";
+import Modal from "./components/Modal";
 import { calculateTotals } from "./features/cart/cartSlice";
+import "./App.css";
 
 function App() {
   const cartItems = useSelector((store) => store.cart);
@@ -15,6 +15,7 @@ function App() {
   }, [cartItems]);
   return (
     <div className="App">
+      <Modal />
       <Navbar />
       <CartContainer />
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
