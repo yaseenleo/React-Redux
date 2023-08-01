@@ -7,7 +7,8 @@ import { calculateTotals } from "./features/cart/cartSlice";
 import "./App.css";
 
 function App() {
-  const cartItems = useSelector((store) => store.cart);
+  const { cartItems } = useSelector((store) => store.cart);
+  const { isOpen } = useSelector((store) => store.modal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +16,8 @@ function App() {
   }, [cartItems]);
   return (
     <div className="App">
-      <Modal />
+      {isOpen && <Modal />}
+
       <Navbar />
       <CartContainer />
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
